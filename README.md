@@ -9,8 +9,24 @@ DSA4262 Project to Build a Classification Model to Detect M6A Modification in RN
 
 ## Overview of how we build the model:
 
-** TO ADD ON TO THIS PART **
+- Step 1: **Parse information from data.json** files into a usable format
 
+- Step 2: **Feature extraction and data transformations**
+    - Added a Read_Counts column, which corresponds to the number of reads for each transcript at each candidate m6A position.
+    - Split the Sequence column into 3 columns: first_base, last_base and middle_sequence.
+    - For the column middle_sequence, we converted the categorical variable using the OneHotEncoder function in the sklearn package.
+    - For the columns first_base and last_base, we converted the categorical variables by label coding each variable using a mapper
+
+- Step 3: **Train-test split by gene_id** that can be found in data.info to make sure no overlapping of genes between different split.
+    - Categorised the genes into 3 categories based on the genes transcripts counts: Low, Medium and High
+    - Splitting of dataset
+        - Training set: 30% of the genes from each category
+        - Test set: remaining 70% of the genes from each category
+    - Combine the genes in all 3 categories
+    - Split the transcripts reads using gene_id to obtain our test set and training set
+    - Resampling of the minority class is done on the training set and test set to deal with the imbalanced dataset
+
+- Step 4: Build a baseline XGBoost Model with resampled data from Step 3
 
 ## How to use our model built to run predictions:
 1. Provision a Ubuntu 20.04 Large Instance on Research Gateway and SSH into it.
