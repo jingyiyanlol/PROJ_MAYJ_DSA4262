@@ -2,10 +2,10 @@
 DSA4262 Project to Build a Classification Model to Detect M6A Modification in RNA Transcript Reads
 
 ## Group Members:
-- Michael Yang
 - Amas Lua
-- Yong Sing Chua
-- Jing Yi Yan
+- Yan Jing Yi
+- Michael Yang
+- Chua Yong Sing
 
 ## Overview of how we build the model:
 
@@ -13,50 +13,57 @@ DSA4262 Project to Build a Classification Model to Detect M6A Modification in RN
 
 
 ## How to use our model built to run predictions:
-1. Provision a Ubuntu 20.04 Large instance on Research Gateway and SSH into it.
+1. Provision a Ubuntu 20.04 Large Instance on Research Gateway and SSH into it.
 
     **ADD SOME SCREENSHOTS HERE OR SOMETHING**
 
-2. CD into a working directory that your instance is mounted to where you want to run our model inference in.
+2. **ONLY IF USING POWERSHELL**
+   ```bash
+   ssh -i '<path/to/pemfile.pem>' -L 8888:localhost:8888 ubuntu@<ip-address of Instance>
+   ```
 
-3. Clone our public repository into your working directory:
+3. CD into a working directory that your Instance is mounted to where you want to run our model inference in.
+
+4. Clone our public repository into your working directory:
+
+   Insert your Github personal access token in the command below. Click [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to create your token.
     ```bash
-    git clone https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262
+    git clone https://<tokenhere>@github.com/jingyiyanlol/PROJ_MAYJ_DSA4262.git
     ```
-4. CD into the cloned repository:
+5. CD into the cloned repository:
     ```bash
     cd PROJ_MAYJ_DSA4262
     ```
-5. If you have not installed python on your instance, install it:
+6. If you have not installed Python on your Instance, install it:
     ```bash
-    sudo apt apt-get update
+    sudo apt update
     sudo apt install python3-pip python3-dev
     ```
-6. Install virtual environment, create, and activate one
+7. Install virtual environment, create, and activate one
     ```bash
     sudo -H pip3 install --upgrade pip
     sudo -H pip3 install virtualenv
     virtualenv ~/.venv
     source ~/.venv/bin/activate
     ```
-7. Install the required packages:
+8. Install the required packages:
     ```bash
     pip install -r requirements.txt
-    ```
-8. Run our model's prediction on the `small_test_data.json` that we have provided for you in this repository:
+    ```lscd PROJ_MAYJ_
+9. Run our model's prediction on the `small_test_data.json` that we have provided for you in this repository:
     ```bash
-    python run_predictions.py XGboost_v2.pkl small_test_data.json small_test_data_predictions.csv
+    python run_predictions.py XGBoost_v2.pkl small_test_data.json small_test_data_predictions.csv
     ```
-9. You should see the similar following outputs in your terminal:
+10. You should see the similar following outputs in your terminal:
     ```bash
-    Loading Model...
+    Loading Model...cd 
     Loading Dataset Features...
     Processing Features...
     Predicting Probabilites...
     Directory 'XGBoost_v2_predictions' created!
     time take: 14.066171407699585
     ```
-10. The outputs above indicate a successful run of our model predictions. You should see a new directory called `XGBoost_v2_predictions` in your working directory. The directory should contain the following file:
+11. The outputs above indicate a successful run of our model predictions. You should see a new directory called `XGBoost_v2_predictions` in your working directory. The directory should contain the following file:
     ```bash
     small_test_data_predictions.csv
     ```
