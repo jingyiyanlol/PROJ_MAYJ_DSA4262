@@ -1,9 +1,20 @@
+"""
+USAGE:
+python run_predictions.py <path/to/model.pkl> <path/to/data_to_predict.json> <path/to/output.csv>
+
+Examples:
+python run_predictions.py ../model_training/XGBoost_version1.pkl ../data/small_test_data.json small_test_data.csv
+python run_predictions.py ../model_training/XGBoost_version1.pkl ../data/dataset1.json mayj_dataset1_1.csv
+python run_predictions.py ../model_training/XGBoost_version1.pkl ../data/dataset2.json mayj_dataset2_1.csv
+"""
+
 ##################################################
 # IMPORT DEPENDENCIES
 ##################################################
 # Data processing
 import os
 import sys
+
 import pandas as pd
 import joblib
 import helper as h
@@ -69,13 +80,9 @@ if __name__ == '__main__':
     predictions_df.to_csv(prediction_output_file_path, index=False)
     
     e = time.time()
-    print("time taken: {}".format(e-s))
+    print("Time taken: {}".format(time.strftime("%H:%M:%S", time.gmtime(e-s))))
     
-# SAMPLE COMMAND TO RUN THE SCRIPT:
-"""
-py run_predictions.py ../model_training/XGBoost_version1.pkl ../data/small_test_data.json small_test_data.csv
-py run_predictions.py ../model_training/XGBoost_version1.pkl ../data/dataset1.json mayj_dataset1_1.csv
-py run_predictions.py ../model_training/XGBoost_version1.pkl ../data/dataset2.json mayj_dataset2_1.csv
-"""
+
+
     
     
