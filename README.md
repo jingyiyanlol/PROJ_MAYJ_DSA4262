@@ -39,8 +39,8 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
     | 2	| ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       | 0.00465           | 3.92        | 109.0            | 0.01360          | 12.00      | 124.0           | 0.00498           | 2.13	    | 79.6             | 0     |
     
     - with the gene_id lists from *step 2*, we split the dataframe into training set and test set.
-    - For the training set dataframe, we resampled the rows of with label of the minority class to deal with the imbalanced dataset
-    - For the column middle_sequence, we converted the categorical variable using the OneHotEncoder function in the sklearn package before fitting the model as XGBoost cannot be fitted with values of character type.
+    - For the training set dataframe, we resampled the rows with label of the minority class to deal with the imbalanced dataset
+    - For the column middle_sequence, we converted the categorical variable using the `OneHotEncoder` function in the `sklearn` package before fitting the model as XGBoost **cannot** be fitted with values of character type.
     
 
 - **Step 4: Build a baseline XGBoost Model** with resampled training data from *Step 3*
@@ -57,7 +57,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 ## How to use our model to get predictions:
 * **Note**: `XGBoost_v1.pkl` in this directory was the model that we built for our first submission, while `XGBoost_v2.pkl` was the model that we built for our second submission. The model that we built for our second submission is the model that you will be using to test our inference pipeline.
 
-### 1. Provision a *Ubuntu 20.04 Large* Instance on *Research Gateway* and **SSH** into it to use the Linux terminal. We recommend an EBS Volume Size of **1500** and an instance Type of **4xlarge** for faster results.
+### 1. Provision a *Ubuntu 20.04 Large* Instance on *Research Gateway* and **SSH** into it to use the Linux terminal. We recommend an EBS Volume Size of **1500GB** and an instance Type of **4xlarge** for faster results. This size is also able to handle the workload of predicting the labels for the SGNex Samples.
 
 - Your IP address of your instance can be found by following the steps in the screenshot below:
 
@@ -164,3 +164,8 @@ make predictions_on_small_dataset
 When `ls`, you should see a new directory called `XGBoost_v2_predictions` created in your working directory. The directory should contain the file `small_test_data_predictions.csv` which contains the output of our model predictions
 
 ![image](https://user-images.githubusercontent.com/92244042/199395555-76a7c646-5b27-4af6-abf2-8de18011be99.png)
+
+### 10. If you would like to use our model to do prediction on a dataset that you have, you can type the following command in your terminal, replacing <path/to/data.json> and <path/to/data_predictions.csv>:
+```bash
+python run_predictions.py XGBoost_v2.pkl <path/to/data.json> <path/to/data_predictions.csv>
+```
