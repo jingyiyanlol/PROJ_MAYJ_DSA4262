@@ -47,11 +47,11 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
 - **Step 5: Experimenting with different values of hyper-parameters** such as `max_depth`, `learning_rate`, `n_estimators`, `reg_alpha`, `reg_lambda` and tracking the differences with *MLFlow GUI*. More information about how we used MLFlow can be found in the [model_training folder](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/tree/main/model_training).
 
-- **Step 6: Choose best model.** The model that has the most improvements in the `auc_roc` and `pr_auc` metrics from our baseline model is chosen as our final model.
-    | Model       | pr_auc     | roc_auc | precision | recall | f1_score |
-    | :---        |   :----:   | :----:  | :----:    | :----: | :----:   |
-    | XGBoost_v1  | 0.837      | 0.31    | 0.122     | 0.801  | 0.212    |
-    | XGBoost_v2  | 0.847      | 0.31    | 0.124     | 0.789  | 0.214    |
+- **Step 6: Choose best model.** Among the parameters that we tried, we chose the comibinition that yielded the most improvements in the `auc_roc` and `pr_auc` metrics from our first model as our final model.
+    | Model       | pr_auc | roc_auc  | precision | recall | f1_score |
+    | :---        | :----: | :----:   | :----:    | :----: | :----:   |
+    | XGBoost_v1  | 0.31   | 0.837    | 0.128     | 0.768  | 0.22     |
+    | XGBoost_v2  | 0.31   | **0.847**| 0.124     | 0.789  | 0.214    |
 
 
 ## How to use our model to get predictions:
