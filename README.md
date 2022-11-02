@@ -8,26 +8,44 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
 ## Overview of how we build our model:
 
-- **Step 1: Parse information from data.json** files into pandas dataframe for further processing
+- **Step 1: Parse information from data.json** files into pandas dataframe for further processing.
+    
+    **Note**: We added a Read_Counts column, which corresponds to the number of reads for each transcript at each candidate m6A position.
 
-- **Step 2: Feature extraction and data transformations**
-    - Added a Read_Counts column, which corresponds to the number of reads for each transcript at each candidate m6A position.
-    - Split the Sequence column into 3 columns: first_base, last_base and middle_sequence.
-    - For the column middle_sequence, we converted the categorical variable using the OneHotEncoder function in the sklearn package.
-    - For the columns first_base and last_base, we converted the categorical variables by label coding each variable using a mapper
+    | - | Transcript 	  | Position | Sequence	| Read_Counts |	dwelling_time(-1) |	std_dev(-1)	| mean_current(-1) | dwelling_time(0) |	std_dev(0) | mean_current(0) | dwelling_time(+1) | std_dev(+1)	| mean_current(+1) |
+    | - | :---            | :---:    | :---:    | :---:       | :---:             | :---:       | :---:            | :---:            | :---:      | :---:           | :---:             | :---:        | :---:            |
+    | 0 | ENST00000000233 | 244	     | AAGACCA  | 185	      | 0.00299           | 2.06        | 125.0            | 0.01770          | 10.40      | 122.0           | 0.00930           | 10.90        | 84.1             |
+    | 1 | ENST00000000233 | 244	     | AAGACCA  | 185	      | 0.00631           | 2.53        | 125.0            | 0.00844          | 4.67       | 126.0           | 0.01030           | 6.30	        | 80.9             |
+    | 2	| ENST00000000233 | 244	     | AAGACCA  | 185	      | 0.00465           | 3.92        | 109.0            | 0.01360          | 12.00      | 124.0           | 0.00498           | 2.13	        | 79.6             |
 
-- **Step 3: Train-test split by gene_id** that can be found in data.info to make sure no overlapping of genes between different split.
-    - Categorised the genes into 3 categories based on the genes transcripts counts: Low, Medium and High
-    - Splitting of dataset
+- **Step 2: Train-test split by gene_id** that can be found in data.info to make sure no overlapping of genes between different split.
+    - Categorised the genes into 3 categories based on the genes transcripts counts: *Low*, *Medium* and *High*
+    - Distribution of split:
         - Training set: 30% of the genes from each category
         - Test set: remaining 70% of the genes from each category
-    - Combine the genes in all 3 categories
-    - Split the transcripts reads using gene_id to obtain our test set and training set
-    - Resampling of the minority class is done on the training set and test set to deal with the imbalanced dataset
+    - Concatenate the genes_id samples of all 3 categories into 2 lists respectively: *train_genes* and *test_genes*
 
-- **Step 4: Build a baseline XGBoost Model** with resampled data from Step 3
+- **Step 3: Feature extraction and data transformations**
+    - Split the Sequence column into 3 columns: first_base, last_base and middle_sequence. For the columns first_base and last_base, we converted the alphabetical letters into numeric numbers with a mapping dictionary.
+        ```python
+        ATGC_mapping = {'A': 0, 'T': 1, 'G': 2, 'C': 3}
+        ```
+    - Join labels (response variable) from `data.info` file into the dataframe.
 
-- **Step 5: Experimenting with different values of hyper-parameters** such as `max_depth`, `learning_rate`, `n_estimators`, `reg_alpha`, `reg_lambda` and tracking the differences with *MLFlow GUI*. More information about how we used MLFlow can be found in the model_training folder.
+    | - | gene_id         | transcript_id 	| transcript_position | first_base | last_base | middle_sequence | Read_Counts | dwelling_time(-1) | std_dev(-1) | mean_current(-1) | dwelling_time(0) | std_dev(0) | mean_current(0) | dwelling_time(+1) | std_dev(+1) | mean_current(+1) | label |
+    | - | :---            | :---            | :---:               |  :---:     |  :---:    | :---:           | :---:       | :---:             | :---:       | :---:            | :---:            | :---:      | :---:           | :---:             | :---:       | :---:            | :---: |
+    | 0 | ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       | 0.00299           | 2.06        | 125.0            | 0.01770          | 10.40      | 122.0           | 0.00930           | 10.90       | 84.1             | 0     |
+    | 1 | ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       |  0.00631          | 2.53        | 125.0            | 0.00844          | 4.67       | 126.0           | 0.01030           | 6.30	    | 80.9             | 0     |
+    | 2	| ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       | 0.00465           | 3.92        | 109.0            | 0.01360          | 12.00      | 124.0           | 0.00498           | 2.13	    | 79.6             | 0     |
+    
+    - with the gene_id lists from *step 2*, we split the dataframe into training set and test set.
+    - For the training set dataframe, we resampled the rows of with label of the minority class to deal with the imbalanced dataset
+    - For the column middle_sequence, we converted the categorical variable using the OneHotEncoder function in the sklearn package before fitting the model as XGBoost cannot be fitted with values of character type.
+    
+
+- **Step 4: Build a baseline XGBoost Model** with resampled training data from *Step 3*
+
+- **Step 5: Experimenting with different values of hyper-parameters** such as `max_depth`, `learning_rate`, `n_estimators`, `reg_alpha`, `reg_lambda` and tracking the differences with *MLFlow GUI*. More information about how we used MLFlow can be found in the [model_training folder](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/tree/main/model_training).
 
 - **Step 6: Choose best model.** The model that has the most improvements in the `auc_roc` and `pr_auc` metrics from our baseline model is chosen as our final model.
     | Model       | pr_auc     | roc_auc | precision | recall | f1_score |
