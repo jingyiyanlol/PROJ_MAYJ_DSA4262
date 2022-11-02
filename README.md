@@ -30,10 +30,10 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 - **Step 5: Experimenting with different values of hyper-parameters** such as `max_depth`, `learning_rate`, `n_estimators`, `reg_alpha`, `reg_lambda` and tracking the differences with *MLFlow GUI*. More information about how we used MLFlow can be found in the model_training folder.
 
 - **Step 6: Choose best model.** The model that has the most improvements in the `auc_roc` and `pr_auc` metrics from our baseline model is chosen as our final model.
-    | Model       | pr_auc     | roc_auc |
-    | :---        |   :----:   | :----:  |
-    | XGBoost_v1  | 0.837      | 0.31    |
-    | XGBoost_v2  | 0.847      | 0.309   |
+    | Model       | pr_auc     | roc_auc | precision | recall | f1_score |
+    | :---        |   :----:   | :----:  | :----:    | :----: | :----:   |
+    | XGBoost_v1  | 0.837      | 0.31    | 0.122     | 0.801  | 0.212    |
+    | XGBoost_v2  | 0.847      | 0.31    | 0.124     | 0.789  | 0.214    |
 
 
 ## How to use our model to get predictions:
@@ -96,7 +96,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 git clone https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262.git
 ```
 
-- If the above method does not work, you can lick [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to learn how to create your GitHub personal access token and try the next method.
+- If the above method does not work, you can click [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to learn how to create your GitHub personal access token and try the next method.
 
     - Insert your GitHub personal access token in `<tokenhere>` in the command below. 
         ```bash
@@ -124,7 +124,7 @@ make install_all
 ```
 - If u are prompted with the message `Do you want to continue? [Y/n]`, type `Y` and press enter.
 
-    - If you would like to install our dependencies in a *python virtual environment*, run the commands below instead:
+- If you would like to install our dependencies in a *python virtual environment*, run the commands below instead:
     ```bash
     make install
     ```
@@ -141,16 +141,8 @@ make install_all
 make predictions_on_small_dataset
 ```
 
-### 9. You should see the similar following outputs in your terminal if the run is succesful:
-```bash
-Predicting labels of small test dataset...
-Loading Model...
-Loading Dataset Features...
-Processing Features...
-Predicting Probabilities...
-Time taken: 00:00:17
-Prediction of small test dataset complete!
-```
-### 10. If the run is successful, you should see a new directory called `XGBoost_v2_predictions` created in your working directory. The directory should contain the file `small_test_data_predictions.csv` which contains the output of our model predictions
+### 9. You should see the similar following outputs in your terminal if the run is successful. 
 
-**INSERT SCREENSHOT HERE ONCE MODEL V2 READY**
+When `ls`, you should see a new directory called `XGBoost_v2_predictions` created in your working directory. The directory should contain the file `small_test_data_predictions.csv` which contains the output of our model predictions
+
+![image](https://user-images.githubusercontent.com/92244042/199395555-76a7c646-5b27-4af6-abf2-8de18011be99.png)
