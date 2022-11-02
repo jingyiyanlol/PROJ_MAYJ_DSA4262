@@ -97,7 +97,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
     - A New VSCode Windows will be launched and you can select `Linux` when prompted to choose between `Linux`, `Windows`, or `Mac`.
 
-### 3. CD into a working directory that your Instance is mounted to where you want to clone our repository to and run our model inference in.
+### 3. CD into a working directory that your Instance is mounted to, where you want to clone our repository to and run our model inference in.
 - For example in terminal:
     ```bash
     cd <working_dir>
@@ -140,7 +140,7 @@ sudo apt install make
 ```bash
 make install_all
 ```
-- If u are prompted with the message `Do you want to continue? [Y/n]`, type `Y` and press enter.
+- If u are prompted with the message `Do you want to continue? [Y/n]`, type `Y` and press `Enter`.
 
 - If you would like to install our dependencies in a *python virtual environment*, run the commands below instead:
     ```bash
@@ -165,7 +165,9 @@ When `ls`, you should see a new directory called `XGBoost_v2_predictions` create
 
 ![image](https://user-images.githubusercontent.com/92244042/199395555-76a7c646-5b27-4af6-abf2-8de18011be99.png)
 
-### 10. If you would like to use our model to do prediction on a dataset that you have, you can type the following command in your terminal, replacing <path/to/data.json> and <path/to/data_predictions.csv>:
+### 10. If you would like to use our model to do prediction on a dataset that you have, you can type the following command in your terminal, replacing `<path/to/data.json>` and `<path/to/data_predictions.csv>` respectively:
 ```bash
 python run_predictions.py XGBoost_v2.pkl <path/to/data.json> <path/to/data_predictions.csv>
 ```
+
+You should be able to see the output csv in the `XGBoost_v2_predictions` directory.
