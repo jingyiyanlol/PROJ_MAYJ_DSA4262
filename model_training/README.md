@@ -1,16 +1,18 @@
-# Model Training and Evaluations Logging with XGBoost, SciKit-Learn, and MLflow
+# Model Training and Evaluations Logging 
 
 ## 1. Train Test Split
-The script `train_test_split.py` splits the data into training and test sets. The outputs `train_data.json`, `train_data.info`, `test_data.json`, `test_data.info` are saved in the `data` folder.
+The script [`train_test_split.py`](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/blob/main/model_training/train_test_split.py) splits the data into training and test sets. The outputs `train_data.json`, `train_data.info`, `test_data.json`, `test_data.info` are saved in the `data` folder.
 
 **Note**: Before this script is ran, a `data` directory containing `data.json` and `data.info` was created in the same level as the script. 
 
 ## 2. XGBoost Baseline Model Training, Evaluation, and Logging with MLflow
-The script `XGBoost.py` trains a baseline XGBoost model, evaluates the model, and logs the model and evaluation metrics with MLflow. 
+The script [`XGBoost.py`](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/blob/main/model_training/XGBoost.py) trains a baseline XGBoost model, evaluates the model, and logs the model and evaluation metrics with MLflow. 
 
-The model artefact `XGBoost_no_tuning.pkl` is saved in a `models` folder created by the script. This pkl file is then renamed and uploaded as `XGBoost_v1.pkl` that you see in our main directory of this repostory.
+The model artefact `XGBoost_no_tuning.pkl` is saved in a `models` folder created by the script. This pkl file is then renamed and uploaded as [`XGBoost_v1.pkl`](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/blob/main/XGBoost_v1.pkl) that you see in our main directory of this repostory.
 
 The feature importance plot `xgboost_no_tuning_feature_importance.jpg` is also automatically saved in a `feature_importance_plots` folder created by the script.
+
+![xgboost_no_tuning_feature_importance](https://user-images.githubusercontent.com/92244042/199538903-a5fbf575-1fbf-430e-bd21-38307fa2ceb9.jpg)
 
 ## 3. XGBoost Hyperparameter Tuning and Logging with MLflow
 
@@ -18,7 +20,7 @@ As Cross Validation is very heavy on computation, we realised that it would be b
 
 - **Step 1**: 
 
-    Using the `XGBoost_random_params.py` script that takes in a value for `max_depth`, `learning_rate`, `n_estimators`, `reg_alpha`, and `reg_lambda` to narrow our grid search. 
+    Using the [`XGBoost_random_params.py`](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/blob/main/model_training/XGBoost_random_params.py) script that takes in a value for `max_depth`, `learning_rate`, `n_estimators`, `reg_alpha`, and `reg_lambda` to narrow our grid search. 
     
     The script fits the XGBoost Classifier with the given parameters and logs the model's evaluation on our test dataset to MLflow. 
     
@@ -26,12 +28,15 @@ As Cross Validation is very heavy on computation, we realised that it would be b
 
 - **Step 2**: 
 
-    Using `hyper_parameters_grid_search.py` script which has a grid of hyperparameters defined in the script. 
+    Using [`hyper_parameters_grid_search.py`](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/blob/main/model_training/hyper_parameters_grid_search%2Cpy) script which has a grid of hyperparameters defined in the script. 
     
     The script iterates through the grid and prints out the best parameters and the corresponding `auc_roc` score. 
     
-    With the parameters returned from `hyper_parameters_grid_search.py`, we input them into another script `XGBoost_tuning.py` which fits the XGBoost Classifier with the best hyperparameters and logs the model's evaluation on our test dataset to MLflow. The model artefact and features importance plot are similarly saved automatically as described in the previous [section]() and uploaded as `XGBoost_v2.pkl` in this repository.
+    With the parameters returned from `hyper_parameters_grid_search.py`, we input them into another script [`XGBoost_tuning.py`](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/blob/main/model_training/XGBoost_tuning.py) which fits the XGBoost Classifier with the best hyperparameters and logs the model's evaluation on our test dataset to MLflow. The model artefact and features importance plot are similarly saved automatically as described in the previous [section](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/tree/main/model_training#2-xgboost-baseline-model-training-evaluation-and-logging-with-mlflow) and uploaded as [`XGBoost_v2.pkl`](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/blob/main/XGBoost_v2.pkl) in this repository.
 
+    ![xgboost_after_tuning_feature_importance](https://user-images.githubusercontent.com/92244042/199539196-bcef3ab7-2762-4771-a894-0261c1e9da0e.jpg)
+
+## 4. Analyzing the MLflow GUI
 The following screenshot displays the *MLflow GUI* of the model experiments that we have ran: 
 
 ![image](https://user-images.githubusercontent.com/92244042/199523417-6c80cb65-955e-40ed-b8f0-79e85a01f529.png)
