@@ -1,0 +1,122 @@
+"""
+Script returns the best auc_roc, it's corresponding hyper-parameters and a table of model metrics from a range of hyper-parameters values tried.
+max_depth: [4, 5, 6]
+learning_rate in: [0.1, 0.3]
+"""
+##################################################
+# Importing in necessary libraries
+##################################################
+import warnings
+
+import pandas as pd
+
+import helper as h
+
+# Model
+import xgboost as xgb 
+
+# Sklearn Model Metrics
+from sklearn.metrics import (
+    confusion_matrix, accuracy_score,
+    roc_auc_score, average_precision_score,
+    precision_score, recall_score, f1_score)
+
+##################################################
+# PATHS SETUP
+##################################################
+# Defining the path of the data
+TRAIN_DATA_PATH = 'data/train_data.json'
+TRAIN_DATA_INFO_PATH = 'data/train_data.info'
+TEST_DATA_PATH = 'data/test_data.json'
+TEST_DATA_INFO_PATH = 'data/test_data.info'
+
+###################################################
+# MAIN DRIVER
+###################################################
+if __name__ == "__main__":
+    warnings.filterwarnings("ignore")
+    
+    # Loading train and test data
+    print("Reading in train and test DATA JSON...")
+    train_data_raw = h.convert_json_to_dataframe_v2(TRAIN_DATA_PATH)
+    test_data_raw = h.convert_json_to_dataframe_v2(TEST_DATA_PATH )
+    print("Reading in train and test DATA INFO...")
+    train_data_info = pd.read_csv(TRAIN_DATA_INFO_PATH)
+    test_data_info = pd.read_csv(TEST_DATA_INFO_PATH)
+        
+    # Process features
+    print("Processing features...")
+    train_data = h.pre_process_data_v1(train_data_raw, train_data_info)
+    test_data = h.pre_process_data_v1(test_data_raw, test_data_info)
+
+    X_train, y_train, ct = h.upsample_and_one_hot_encode_train_data(train_data)
+    X_test, y_test = h.one_hot_encode_test_data(test_data, ct)
+
+    num_features = len(ct.get_feature_names_out())
+        
+        
+    ##################################################
+    # MODEL TRAINING AND LOGGING
+    ##################################################
+    booster = 'gbtree'
+    seed = 4262
+    best_auc_roc = 0
+    best_param = []
+    best_results = []
+
+    for max_depth in [4, 5, 6]:
+        for learning_rate in [0.1, 0.3]:
+            for n_estimators in [100]:
+                for l2_penalty in [1.0]:
+                    for l1_penalty in [0]:
+                        model_params = {
+                            'max_depth': max_depth,
+                            'learning_rate': learning_rate,
+                            'booster': booster,
+                            'random_state': seed,
+                            'n_estimators': n_estimators,
+                            'reg_alpha': l1_penalty,
+                            'reg_lambda': l2_penalty
+                        }
+
+                        model = xgb.XGBClassifier(**model_params)
+                        
+                        # Fitting training data to the model
+                        print("Fitting model...")
+                        model.fit(X_train, y_train)
+                        # logging model parameters
+                        model_parameters = model.get_xgb_params()
+                        
+                        
+                        # Running prediction on validation dataset
+                        print("Running prediction...")
+                        test_data_with_predicted_prob_mean = h.get_predict_probability(test_data, X_test, model)
+                        prediction_threshold=0.5
+                        test_data_with_pred_labels = h.get_predicted_label(test_data_with_predicted_prob_mean, threshold=prediction_threshold)
+                        y_true, y_score, y_pred = test_data_with_pred_labels['label'], test_data_with_pred_labels['predicted_prob'], test_data_with_pred_labels['predicted_label']
+                        
+                        # Getting metrics on the validation dataset
+                        print("Calculating model metrics...")
+                        cf_matrix = confusion_matrix(y_true, y_pred)
+                        precision = precision_score(y_true, y_pred)
+                        recall = recall_score(y_true, y_pred)
+                        F1_score = f1_score(y_true, y_pred)
+                        accuracy = accuracy_score(y_true, y_pred)
+                        roc_auc = roc_auc_score(y_true, y_score)
+                        pr_auc = average_precision_score(y_true, y_score)
+                        false_positive = cf_matrix[1][0]
+                        false_negative = cf_matrix[0][1]
+                        true_positive = cf_matrix[1][1]
+                        true_negative = cf_matrix[0][0]
+
+                        if roc_auc > best_auc_roc:
+                            best_auc_roc = roc_auc
+                            best_param = model_parameters
+                            best_results = [precision, recall, F1_score, accuracy, roc_auc, pr_auc, false_positive, false_negative, true_positive, true_negative]
+
+                        print(model_parameters, roc_auc)
+        
+    print(best_auc_roc)
+    print(best_param)
+    print(best_results)
+    
