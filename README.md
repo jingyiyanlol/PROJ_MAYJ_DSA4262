@@ -8,6 +8,8 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
 ## Overview of how we build our model:
 
+![image](https://user-images.githubusercontent.com/92244042/199651248-9871b55e-e464-40e8-9c34-8e22042116a1.png)
+
 - **Step 1: Parse information from data.json** files into pandas dataframe for further processing.
     
     **Note**: We added a Read_Counts column, which corresponds to the number of reads for each transcript at each candidate m6A position.
@@ -56,6 +58,8 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
 ## How to use our model to get predictions:
 * **Note**: `XGBoost_v1.pkl` in this directory was the model that we built for our first submission, while `XGBoost_v2.pkl` was the model that we built for our second submission. The model that we built for our second submission is the model that you will be using to test our inference pipeline.
+
+![image](https://user-images.githubusercontent.com/92244042/199652315-71751eda-a5ac-4cd5-a6cf-c9cef524bd78.png)
 
 ### 1. Provision a *Ubuntu 20.04 Large* Instance on *Research Gateway* and **SSH** into it to use the Linux terminal. We recommend an EBS Volume Size of **1500GB** and an instance Type of **4xlarge** for faster results. This size is also able to handle the workload of predicting the labels for the SGNex Samples.
 
