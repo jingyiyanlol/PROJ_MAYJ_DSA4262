@@ -23,8 +23,8 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 - **Step 2: Train-test split by gene_id** that can be found in data.info to make sure no overlapping of genes between different split.
     - Categorised the genes into 3 categories based on the genes transcripts counts: *Low*, *Medium* and *High*
     - Distribution of split:
-        - Training set: 30% of the genes from each category
-        - Test set: remaining 70% of the genes from each category
+        - Training set: 70% of the genes from each category
+        - Test set: remaining 30% of the genes from each category
     - Concatenate the genes_id samples of all 3 categories into 2 lists respectively: *train_genes* and *test_genes*
 
 - **Step 3: Feature extraction and data transformations**
@@ -49,7 +49,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
 - **Step 5: Experimenting with different values of hyper-parameters** such as `max_depth`, `learning_rate`, `n_estimators`, `reg_alpha`, `reg_lambda` and tracking the differences with *MLFlow GUI*. More information about how we used MLFlow can be found in the [model_training folder](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/tree/main/model_training).
 
-- **Step 6: Choose best model.** Among the parameters that we tried, we chose the comibinition that yielded the most improvements in the `auc_roc` and `pr_auc` metrics from our first model as our final model.
+- **Step 6: Choose best model.** Among the parameters that we tried, we chose the combination that yielded the most improvements in the `auc_roc` and `pr_auc` metrics from our first model as our final model.
     | Model       | pr_auc | roc_auc  | precision | recall | f1_score |
     | :---        | :----: | :----:   | :----:    | :----: | :----:   |
     | XGBoost_v1  | 0.31   | 0.837    | 0.128     | 0.768  | 0.22     |
