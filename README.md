@@ -153,10 +153,18 @@ We recommend an EBS Volume Size of **1500GB** and an instance Type of **4xlarge*
 
 - Using Git in terminal:
 ```bash
-git clone https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262.git
+git clone --depth 1 https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262.git
 ```
 
-- If the above method does not work, you can click [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to learn how to create your GitHub personal access token and try the next method.
+- If the above method does not work, you can try configuring your Git with commands below before running the git clone command above again:
+   ```bash
+   set GIT_TRACE_PACKET=1
+   set GIT_TRACE=1
+   set GIT_CURL_VERBOSE=1
+   git config --global core.compression 0
+   ```
+
+- If the above methods do not work, you can click [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to learn how to create your GitHub personal access token and try the next method.
 
     - Insert your GitHub personal access token in `<tokenhere>` in the command below. 
         ```bash
