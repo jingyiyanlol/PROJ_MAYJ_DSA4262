@@ -1,20 +1,43 @@
 # PROJECT MAYJ DSA4262 PROJECT REPOSITORY
-This project is aimed at building a *Classification Model* to detect post-transcriptional M6A modification in RNA Transcript reads
-![image](https://user-images.githubusercontent.com/92244042/199272325-0c6ada6a-f554-47e3-9111-7d2f53ef727b.png)
-Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.3892/ijmm.2020.4746)
-
 ### Group Members: 
 **M**ichael Yang, **A**mas Lua, **Y**ong Sing Chua, **J**ing Yi Yan
+
+## Project Motivation
+This project is aimed at building a *Classification Model* to detect post-transcriptional M6A modification in RNA Transcript reads. The probability of m6A modification of given transcript position coming from a candidate RNA-Seq short read is being output as an inference of the model. 
+
+m6A modification (m6A RNA methylation) is the most abundant modification among the many pos-transcriptional modifications discovered so far as it servs as a significant regulator of transcript expression. 
+
+During the modification, adenosine molecules are being methylated, thereby resulting in a change of its chemical structure that translates to many negative effects on one's metabolism. When the rate of m6A modification is too high, oncoprotein expression may be increased, thereby triggering cancer cells proliferation and mestastasis. 
+
+Hence, it is crucial for us to investigate into means to detect such modifications to allow early detection of illnesses and open up the possibilities of immunotherapy for cancer treatments.
+
+![image](https://user-images.githubusercontent.com/92244042/199272325-0c6ada6a-f554-47e3-9111-7d2f53ef727b.png)
+Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.3892/ijmm.2020.4746)
 
 ## Overview of how we build our model:
 
 ![image](https://user-images.githubusercontent.com/92244042/199651248-9871b55e-e464-40e8-9c34-8e22042116a1.png)
 
-- **Step 1: Parse information from data.json** files into pandas dataframe for further processing.
-    
-    **Note**: We added a Read_Counts column, which corresponds to the number of reads for each transcript at each candidate m6A position.
+- **Step 1: Parse information from provided data.json** file into pandas dataframe for further processing.
 
-    | - | Transcript 	  | Position | Sequence	| Read_Counts |	dwelling_time(-1) |	std_dev(-1)	| mean_current(-1) | dwelling_time(0) |	std_dev(0) | mean_current(0) | dwelling_time(+1) | std_dev(+1)	| mean_current(+1) |
+    **Before**: 
+    ```json
+    {"ENST00000000233":
+        {"244":
+            {"AAGACCA":[[0.00299,2.06,125.0,0.0177,10.4,122.0,0.0093,10.9,84.1],
+                        [0.00631,2.53,125.0,0.00844,4.67,126.0,0.0103,6.3,80.9],
+                        [0.00465,3.92,109.0,0.0136,12.0,124.0,0.00498,2.13,79.6],
+                        ...]
+            }
+        }
+    }
+    ```
+    
+    **After**:
+
+    **Note**: We added a `Read_Counts` column, which corresponds to the number of reads for each transcript at each candidate m6A position.
+
+    |   | Transcript 	  | Position | Sequence	| Read_Counts |	dwelling_time(-1) |	std_dev(-1)	| mean_current(-1) | dwelling_time(0) |	std_dev(0) | mean_current(0) | dwelling_time(+1) | std_dev(+1)	| mean_current(+1) |
     | - | :---            | :---:    | :---:    | :---:       | :---:             | :---:       | :---:            | :---:            | :---:      | :---:           | :---:             | :---:        | :---:            |
     | 0 | ENST00000000233 | 244	     | AAGACCA  | 185	      | 0.00299           | 2.06        | 125.0            | 0.01770          | 10.40      | 122.0           | 0.00930           | 10.90        | 84.1             |
     | 1 | ENST00000000233 | 244	     | AAGACCA  | 185	      | 0.00631           | 2.53        | 125.0            | 0.00844          | 4.67       | 126.0           | 0.01030           | 6.30	        | 80.9             |
@@ -34,15 +57,26 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
         ```
     - Join labels (response variable) from `data.info` file into the dataframe.
 
-    | - | gene_id         | transcript_id 	| transcript_position | first_base | last_base | middle_sequence | Read_Counts | dwelling_time(-1) | std_dev(-1) | mean_current(-1) | dwelling_time(0) | std_dev(0) | mean_current(0) | dwelling_time(+1) | std_dev(+1) | mean_current(+1) | label |
-    | - | :---            | :---            | :---:               |  :---:     |  :---:    | :---:           | :---:       | :---:             | :---:       | :---:            | :---:            | :---:      | :---:           | :---:             | :---:       | :---:            | :---: |
-    | 0 | ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       | 0.00299           | 2.06        | 125.0            | 0.01770          | 10.40      | 122.0           | 0.00930           | 10.90       | 84.1             | 0     |
-    | 1 | ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       |  0.00631          | 2.53        | 125.0            | 0.00844          | 4.67       | 126.0           | 0.01030           | 6.30	    | 80.9             | 0     |
-    | 2	| ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       | 0.00465           | 3.92        | 109.0            | 0.01360          | 12.00      | 124.0           | 0.00498           | 2.13	    | 79.6             | 0     |
+    - `data.info` sample rows:
+        ```csv
+        gene_id,transcript_id,transcript_position,label
+        ENSG00000004059,ENST00000000233,244,0
+        ENSG00000004059,ENST00000000233,261,0
+        ENSG00000004059,ENST00000000233,316,0
+        ```
+
+    - Combined DataFrame:
+
+        |   | gene_id         | transcript_id 	| transcript_position | first_base | last_base | middle_sequence | Read_Counts | dwelling_time(-1) | std_dev(-1) | mean_current(-1) | dwelling_time(0) | std_dev(0) | mean_current(0) | dwelling_time(+1) | std_dev(+1) | mean_current(+1) | label |
+        | - | :---            | :---            | :---:               |  :---:     |  :---:    | :---:           | :---:       | :---:             | :---:       | :---:            | :---:            | :---:      | :---:           | :---:             | :---:       | :---:            | :---: |
+        | 0 | ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       | 0.00299           | 2.06        | 125.0            | 0.01770          | 10.40      | 122.0           | 0.00930           | 10.90       | 84.1             | 0     |
+        | 1 | ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       |  0.00631          | 2.53        | 125.0            | 0.00844          | 4.67       | 126.0           | 0.01030           | 6.30	    | 80.9             | 0     |
+        | 2	| ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       | 0.00465           | 3.92        | 109.0            | 0.01360          | 12.00      | 124.0           | 0.00498           | 2.13	    | 79.6             | 0     |
     
     - with the gene_id lists from *step 2*, we split the dataframe into training set and test set.
-    - For the training set dataframe, we resampled the rows with label of the minority class to deal with the imbalanced dataset
-    - For the column middle_sequence, we converted the categorical variable using the `OneHotEncoder` function in the `sklearn` package before fitting the model as XGBoost **cannot** be fitted with values of character type.
+    - For the training set dataframe, we resampled the rows with label of the minority class to deal with the imbalanced dataset (m6A modified transcripts are much less than the unmodified transcripts).
+    - After resampling, we dropped indentity columns which are namely `gene_id` and `transcript_id`. The `Read_Counts` column was also dropped as it is not logical to use it as a feature to predict m6A modification. 
+    - For the column `middle_sequence`, we converted the categorical variable using the `OneHotEncoder` function in the `sklearn` package before fitting the model as XGBoost **cannot** be fitted with values of character type.
     
 
 - **Step 4: Build a baseline XGBoost Model** with resampled training data from *Step 3*
@@ -61,7 +95,9 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
 ![image](https://user-images.githubusercontent.com/92244042/199652315-71751eda-a5ac-4cd5-a6cf-c9cef524bd78.png)
 
-### 1. Provision a *Ubuntu 20.04 Large* Instance on *Research Gateway* and **SSH** into it to use the Linux terminal. We recommend an EBS Volume Size of **1500GB** and an instance Type of **4xlarge** for faster results. This size is also able to handle the workload of predicting the labels for the SGNex Samples.
+### 1. Provision a *Ubuntu 20.04 Large* Instance on *Research Gateway* and **SSH** into it to use the Linux terminal. 
+
+We recommend an EBS Volume Size of **1500GB** and an instance Type of **4xlarge** for faster results. This size is also able to handle the workload of predicting the possibilites of m6A modification of the short reads in the [SGNex Samples](https://sg-nex-data.s3.amazonaws.com/index.html#data/processed_data/m6Anet/) in reasonable time.
 
 - Your IP address of your instance can be found by following the steps in the screenshot below:
 
@@ -165,13 +201,16 @@ make predictions_on_small_dataset
 
 ### 9. You should see the similar following outputs in your terminal if the run is successful. 
 
-When `ls`, you should see a new directory called `XGBoost_v2_predictions` created in your working directory. The directory should contain the file `small_test_data_predictions.csv` which contains the output of our model predictions
+When type the command `ls`, you should see a new directory called `XGBoost_v2_predictions` created in your working directory. The directory should contain the file `small_test_data_predictions.csv` which contains the output of our model predictions with the following columns: `transcript_id`, `transcript_position` and `score`.
 
 ![image](https://user-images.githubusercontent.com/92244042/199395555-76a7c646-5b27-4af6-abf2-8de18011be99.png)
 
-### 10. If you would like to use our model to do prediction on a dataset that you have, you can type the following command in your terminal, replacing `<path/to/data.json>` and `<path/to/data_predictions.csv>` respectively:
+### 10. Use our model to do prediction on a dataset that you have. 
+
+You can type the following command in your terminal and replace `<path/to/data.json>` and `<data_predictions.csv>` with the **path to the m6ANet processed RNA sequence reads json file** and the **name of the output csv** file respectively.
+
 ```bash
-python run_predictions.py XGBoost_v2.pkl <path/to/data.json> <path/to/data_predictions.csv>
+python run_predictions.py XGBoost_v2.pkl <path/to/data.json> <data_predictions.csv>
 ```
 
-You should be able to see the output csv in the `XGBoost_v2_predictions` directory.
+You should be able to see the output csv in the `XGBoost_v2_predictions` directory when the run is completed.
