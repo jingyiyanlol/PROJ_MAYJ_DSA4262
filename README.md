@@ -3,13 +3,13 @@
 **M**ichael Yang, **A**mas Lua, **Y**ong Sing Chua, **J**ing Yi Yan
 
 ## Project Motivation
-This project is aimed at building a *Classification Model* to detect post-transcriptional M6A modification in RNA Transcript reads. The probability of m6A modification of given transcript position coming from a candidate RNA-Seq short read is being output as an inference of the model. 
+This project is aimed at building a *Classification Model* to detect post-transcriptional M6A modification in RNA Transcript reads. The probability of m6A modification of a given candidate RNA-Seq short read coming from a specific transcript position is being output as an inference of the model. 
 
-m6A modification (m6A RNA methylation) is the most abundant modification among the many pos-transcriptional modifications discovered so far as it servs as a significant regulator of transcript expression. 
+m6A modification (m6A RNA methylation) is the most abundant modification among the many pos-transcriptional modifications discovered so far as it serves as a significant regulator of transcript expression. 
 
-During the modification, adenosine molecules are being methylated, thereby resulting in a change of its chemical structure that translates to many negative effects on one's metabolism. When the rate of m6A modification is too high, oncoprotein expression may be increased, thereby triggering cancer cells proliferation and mestastasis. 
+During the modification, adenosine molecules are being methylated, thereby resulting in a change of its chemical structure that translates to possibly destructive effects on one's metabolism. When the rate of m6A modification is too high, oncoprotein expression may be increased, thereby triggering cancer cells proliferation and mestastasis. 
 
-Hence, it is crucial for us to investigate into means to detect such modifications to allow early detection of illnesses and open up the possibilities of immunotherapy for cancer treatments.
+Hence, it is crucial for us to investigate into means to detect such modifications to allow early detection of illnesses and open up the possibilities of immunotherapy in cancer treatments.
 
 ![image](https://user-images.githubusercontent.com/92244042/199272325-0c6ada6a-f554-47e3-9111-7d2f53ef727b.png)
 Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.3892/ijmm.2020.4746)
@@ -26,8 +26,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
         {"244":
             {"AAGACCA":[[0.00299,2.06,125.0,0.0177,10.4,122.0,0.0093,10.9,84.1],
                         [0.00631,2.53,125.0,0.00844,4.67,126.0,0.0103,6.3,80.9],
-                        [0.00465,3.92,109.0,0.0136,12.0,124.0,0.00498,2.13,79.6],
-                        ...]
+                        [0.00465,3.92,109.0,0.0136,12.0,124.0,0.00498,2.13,79.6]]
             }
         }
     }
@@ -43,8 +42,11 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
     | 1 | ENST00000000233 | 244	     | AAGACCA  | 185	      | 0.00631           | 2.53        | 125.0            | 0.00844          | 4.67       | 126.0           | 0.01030           | 6.30	        | 80.9             |
     | 2	| ENST00000000233 | 244	     | AAGACCA  | 185	      | 0.00465           | 3.92        | 109.0            | 0.01360          | 12.00      | 124.0           | 0.00498           | 2.13	        | 79.6             |
 
-- **Step 2: Train-test split by gene_id** that can be found in data.info to make sure no overlapping of genes between different split.
+- **Step 2: Train-test split by gene_id** that can be found in data.info to make sure no overlapping of genes between different split, preventing data leakage.
     - Categorised the genes into 3 categories based on the genes transcripts counts: *Low*, *Medium* and *High*
+      - Low: transcript counts < 15
+      - Medium: 14 < transcript counts < 46
+      - High: transcript counts > 45
     - Distribution of split:
         - Training set: 70% of the genes from each category
         - Test set: remaining 30% of the genes from each category
@@ -81,7 +83,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
 - **Step 4: Build a baseline XGBoost Model** with resampled training data from *Step 3*
 
-- **Step 5: Experimenting with different values of hyper-parameters** such as `max_depth`, `learning_rate`, `n_estimators`, `reg_alpha`, `reg_lambda` and tracking the differences with *MLFlow GUI*. More information about how we used MLFlow can be found in the [model_training folder](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/tree/main/model_training).
+- **Step 5: Experimenting with different values of hyper-parameters** such as `max_depth`, `learning_rate`, `n_estimators`, `reg_alpha`, `reg_lambda` and tracking the differences with *MLflow GUI*. More information about how we used MLflow can be found in the [model_training folder](https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262/tree/main/model_training).
 
 - **Step 6: Choose best model.** Among the parameters that we tried, we chose the combination that yielded the most improvements in the `auc_roc` and `pr_auc` metrics from our first model as our final model.
     | Model       | pr_auc | roc_auc  | precision | recall | f1_score |
