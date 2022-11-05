@@ -1,6 +1,6 @@
 # PROJECT MAYJ DSA4262 PROJECT REPOSITORY
 ### Group Members: 
-**M**ichael Yang, **A**mas Lua, **Y**ong Sing Chua, **J**ing Yi Yan
+[**M**ichael Yang](https://github.com/yangzichang12), [**A**mas Lua](https://github.com/amaslua), [**Y**ong Sing Chua](https://github.com/yongsingc), [**J**ing Yi Yan](https://github.com/jingyiyanlol)
 
 ## Project Motivation
 This project is aimed at building a *Classification Model* to detect post-transcriptional M6A modification in RNA Transcript reads. The probability of m6A modification of a given candidate RNA-Seq short read coming from a specific transcript position is being output as an inference of the model. 
@@ -15,7 +15,7 @@ Hence, it is crucial for us to investigate into means to detect such modificatio
 Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.3892/ijmm.2020.4746)
 
 ### Project Video:
-[![Youtube Video Thumbnail](https://user-images.githubusercontent.com/92244042/200111918-8cc9b5bc-6684-4001-82d7-0979eea1f4e0.png)](https://youtu.be/LqMW0TfXFJ8)
+[![Youtube Video Thumbnail](https://user-images.githubusercontent.com/92244042/200112460-6fe7aef3-bfa9-4202-aa5c-b922128ad504.png)](https://youtu.be/LqMW0TfXFJ8)
 
 ## Overview of how we build our model:
 
@@ -102,7 +102,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
 ### 1. Provision a *Ubuntu 20.04 Large* Instance on *Research Gateway* and **SSH** into it to use the Linux terminal. 
 
-We recommend an EBS Volume Size of **1500GB** and an instance Type of **4xlarge** for faster results. This size is also able to handle the workload of predicting the possibilites of m6A modification of the short reads in the [SGNex Samples](https://sg-nex-data.s3.amazonaws.com/index.html#data/processed_data/m6Anet/) in reasonable time.
+We recommend an EBS Volume Size of **1500GB** and an Instance Type of **4xlarge** for faster results. This size is also able to handle the workload of predicting the possibilites of m6A modification of the short reads in the [SGNex Samples](https://sg-nex-data.s3.amazonaws.com/index.html#data/processed_data/m6Anet/) in reasonable time.
 
 - Your IP address of your instance can be found by following the steps in the screenshot below:
 
@@ -127,7 +127,7 @@ We recommend an EBS Volume Size of **1500GB** and an instance Type of **4xlarge*
 
         ![image](https://user-images.githubusercontent.com/92244042/199287365-70d8121e-9956-4ff4-ab0a-00004d582a2e.png)
 
-    - Replace `123.456.789.542` with your IP instance's IP address as well as the `~\path\to\pem-file.pem` and paste the following configurations into your `config` file:
+    - Replace `123.456.789.542` with your instance's IP address as well as the `~\path\to\pem-file.pem` and paste the following configurations into your `config` file:
         ```config
         Host 123.456.789.542
             HostName 123.456.789.542
@@ -140,7 +140,7 @@ We recommend an EBS Volume Size of **1500GB** and an instance Type of **4xlarge*
 
         ![image](https://user-images.githubusercontent.com/92244042/199288300-b34d2a98-851f-4380-9a81-b0be30f5e509.png)
 
-    - A New VSCode Windows will be launched and you can select `Linux` when prompted to choose between `Linux`, `Windows`, or `Mac`.
+    - A New VSCode window will be launched and you can select `Linux` when prompted to choose between `Linux`, `Windows`, or `Mac`.
 
 ### 3. CD into a working directory that your Instance is mounted to, where you want to clone our repository to and run our model inference in.
 - For example in terminal:
@@ -167,7 +167,7 @@ git clone --depth 1 https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262.git
    git config --global core.compression 0
    ```
 
-- If the above methods do not work, you can click [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to learn how to create your GitHub personal access token and try the next method.
+- If the above methods still do not work, you can click [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to learn how to create your GitHub personal access token and try the next method. If you are unable to clone this repository still, you can contact any of us on GitHub!
 
     - Insert your GitHub personal access token in `<tokenhere>` in the command below. 
         ```bash
