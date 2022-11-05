@@ -1,4 +1,7 @@
-# PROJECT MAYJ DSA4262 PROJECT REPOSITORY
+# NUS DSA4262 AY2022/2023 Semester 1 PROJECT REPOSITORY
+## Team MAYJ
+A group of final year students majoring in Data Science and Analytics at the National University of Singapore (NUS)
+
 ### Group Members: 
 [**M**ichael Yang](https://github.com/yangzichang12), [**A**mas Lua](https://github.com/amaslua), [**Y**ong Sing Chua](https://github.com/yongsingc), [**J**ing Yi Yan](https://github.com/jingyiyanlol)
 
@@ -11,8 +14,11 @@ During the modification, adenosine molecules are being methylated, thereby resul
 
 Hence, it is crucial for us to investigate into means to detect such modifications to allow early detection of illnesses and open up the possibilities of immunotherapy in cancer treatments.
 
+If you would like access to our full training data (`data.json` and `data.info`), please contact our Professor [Jonathan Goeke](https://github.com/jonathangoeke) for access and approval.
+
 ![image](https://user-images.githubusercontent.com/92244042/199272325-0c6ada6a-f554-47e3-9111-7d2f53ef727b.png)
 Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.3892/ijmm.2020.4746)
+
 
 ### Project Video:
 [![Youtube Video Thumbnail](https://user-images.githubusercontent.com/92244042/200112460-6fe7aef3-bfa9-4202-aa5c-b922128ad504.png)](https://youtu.be/LqMW0TfXFJ8)
