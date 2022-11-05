@@ -102,7 +102,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
 ### 1. Provision a *Ubuntu 20.04 Large* Instance on *Research Gateway* and **SSH** into it to use the Linux terminal. 
 
-We recommend an EBS Volume Size of **1500GB** and an Instance Type of **4xlarge** for faster results. This size is also able to handle the workload of predicting the possibilites of m6A modification of the short reads in the [SGNex Samples](https://sg-nex-data.s3.amazonaws.com/index.html#data/processed_data/m6Anet/) in reasonable time.
+We recommend an EBS Volume Size of **1500GB** and an Instance Type of **4xlarge** for faster results. This size is also able to handle the workload of predicting the possibilites of m6A modification of the short reads in the [SG-NEx Samples](https://sg-nex-data.s3.amazonaws.com/index.html#data/processed_data/m6Anet/) in reasonable time.
 
 - Your IP address of your instance can be found by following the steps in the screenshot below:
 
