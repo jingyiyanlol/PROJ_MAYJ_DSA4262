@@ -1,3 +1,4 @@
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 # NUS DSA4262 AY2022/2023 Semester 1 PROJECT REPOSITORY
 ## Team MAYJ
 A group of final year students majoring in Data Science and Analytics at the National University of Singapore (NUS)
