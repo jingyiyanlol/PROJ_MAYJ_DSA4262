@@ -53,7 +53,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
     - Distribution of split:
         - Training set: 70% of the genes from each category
         - Test set: remaining 30% of the genes from each category
-    - Concatenate the genes_id samples of all 3 categories into 2 lists respectively: *train_genes* and *test_genes*
+    - Concatenate the gene_id samples of all 3 categories into 2 lists respectively: *train_genes* and *test_genes*
 
 - **Step 3: Feature extraction and data transformations**
     - Split the Sequence column into 3 columns: first_base, last_base and middle_sequence. For the columns first_base and last_base, we converted the alphabetical letters into numeric numbers with a mapping dictionary.
