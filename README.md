@@ -5,7 +5,7 @@
 ## Project Motivation
 This project is aimed at building a *Classification Model* to detect post-transcriptional M6A modification in RNA Transcript reads. The probability of m6A modification of a given candidate RNA-Seq short read coming from a specific transcript position is being output as an inference of the model. 
 
-m6A modification (m6A RNA methylation) is the most abundant modification among the many pos-transcriptional modifications discovered so far as it serves as a significant regulator of transcript expression. 
+m6A modification (m6A RNA methylation) is the most abundant modification among the many post-transcriptional modifications discovered so far as it serves as a significant regulator of transcript expression. 
 
 During the modification, adenosine molecules are being methylated, thereby resulting in a change of its chemical structure that translates to possibly destructive effects on one's metabolism. When the rate of m6A modification is too high, oncoprotein expression may be increased, thereby triggering cancer cells proliferation and mestastasis. 
 
