@@ -78,7 +78,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
         | 1 | ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       |  0.00631          | 2.53        | 125.0            | 0.00844          | 4.67       | 126.0           | 0.01030           | 6.30	    | 80.9             | 0     |
         | 2	| ENSG00000004059 | ENST00000000233 | 244	              | 0          | 0         | AGACC           | 185	       | 0.00465           | 3.92        | 109.0            | 0.01360          | 12.00      | 124.0           | 0.00498           | 2.13	    | 79.6             | 0     |
     
-    - with the gene_id lists from *step 2*, we split the dataframe into training set and test set.
+    - With the gene_id lists from *step 2*, we split the dataframe into training set and test set.
     - For the training set dataframe, we resampled the rows with label of the minority class to deal with the imbalanced dataset (m6A modified transcripts are much less than the unmodified transcripts).
     - After resampling, we dropped indentity columns which are namely `gene_id` and `transcript_id`. The `Read_Counts` column was also dropped as it is not logical to use it as a feature to predict m6A modification. 
     - For the column `middle_sequence`, we converted the categorical variable using the `OneHotEncoder` function in the `sklearn` package before fitting the model as XGBoost **cannot** be fitted with values of character type.
