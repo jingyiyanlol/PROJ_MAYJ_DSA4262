@@ -140,7 +140,7 @@ We recommend an EBS Volume Size of **1500GB** and an Instance Type of **4xlarge*
 
         ![image](https://user-images.githubusercontent.com/92244042/199288300-b34d2a98-851f-4380-9a81-b0be30f5e509.png)
 
-    - A New VSCode window will be launched and you can select `Linux` when prompted to choose between `Linux`, `Windows`, or `Mac`.
+    - A new VSCode window will be launched and you can select `Linux` when prompted to choose between `Linux`, `Windows`, or `Mac`.
 
 ### 3. CD into a working directory that your Instance is mounted to, where you want to clone our repository to and run our model inference in.
 - For example in terminal:
