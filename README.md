@@ -193,7 +193,7 @@ sudo apt install make
 ```bash
 make install_all
 ```
-- If u are prompted with the message `Do you want to continue? [Y/n]`, type `Y` and press `Enter`.
+- If you are prompted with the message `Do you want to continue? [Y/n]`, type `Y` and press `Enter`.
 
 - If you would like to install our dependencies in a *python virtual environment*, run the commands below instead:
     ```bash
