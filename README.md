@@ -3,11 +3,11 @@
 [**M**ichael Yang](https://github.com/yangzichang12), [**A**mas Lua](https://github.com/amaslua), [**Y**ong Sing Chua](https://github.com/yongsingc), [**J**ing Yi Yan](https://github.com/jingyiyanlol)
 
 ## Project Motivation
-This project is aimed at building a *Classification Model* to detect post-transcriptional M6A modification in RNA Transcript reads. The probability of m6A modification of a given candidate RNA-Seq short read coming from a specific transcript position is being output as an inference of the model. 
+This project is aimed at building a *Classification Model* to detect post-transcriptional m6A modification in RNA Transcript reads. The probability of m6A modification of a given candidate RNA-Seq short read coming from a specific transcript position is being output as an inference of the model. 
 
 m6A modification (m6A RNA methylation) is the most abundant modification among the many post-transcriptional modifications discovered so far as it serves as a significant regulator of transcript expression. 
 
-During the modification, adenosine molecules are being methylated, thereby resulting in a change of its chemical structure that translates to possibly destructive effects on one's metabolism. When the rate of m6A modification is too high, oncoprotein expression may be increased, thereby triggering cancer cells proliferation and mestastasis. 
+During the modification, adenosine molecules are being methylated, thereby resulting in a change in its chemical structure that translates to possibly destructive effects on one's metabolism. When the rate of m6A modification is too high, oncoprotein expression may be increased, thereby triggering cancer cells proliferation and mestastasis. 
 
 Hence, it is crucial for us to investigate into means to detect such modifications to allow early detection of illnesses and open up the possibilities of immunotherapy in cancer treatments.
 
@@ -17,11 +17,11 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 ### Project Video:
 [![Youtube Video Thumbnail](https://user-images.githubusercontent.com/92244042/200112460-6fe7aef3-bfa9-4202-aa5c-b922128ad504.png)](https://youtu.be/LqMW0TfXFJ8)
 
-## Overview of how we build our model:
+## Overview of how we built our model:
 
 ![image](https://user-images.githubusercontent.com/92244042/199651248-9871b55e-e464-40e8-9c34-8e22042116a1.png)
 
-- **Step 1: Parse information from provided data.json** file into pandas dataframe for further processing.
+- **Step 1: Parse information from provided data.json** file into pandas DataFrame for further processing
 
     **Before**: 
     ```json
@@ -45,18 +45,18 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
     | 1 | ENST00000000233 | 244	     | AAGACCA  | 185	      | 0.00631           | 2.53        | 125.0            | 0.00844          | 4.67       | 126.0           | 0.01030           | 6.30	        | 80.9             |
     | 2	| ENST00000000233 | 244	     | AAGACCA  | 185	      | 0.00465           | 3.92        | 109.0            | 0.01360          | 12.00      | 124.0           | 0.00498           | 2.13	        | 79.6             |
 
-- **Step 2: Train-test split by gene_id** that can be found in data.info to make sure no overlapping of genes between different split, preventing data leakage.
+- **Step 2: Train-test split by gene_id** that can be found in data.info to make sure no overlapping of genes between different split, preventing data leakage
     - Categorised the genes into 3 categories based on the genes transcripts counts: *Low*, *Medium* and *High*
-      - Low: transcript counts < 15
-      - Medium: 14 < transcript counts < 46
-      - High: transcript counts > 45
+      - Low: < 15
+      - Medium: 14 - 45
+      - High: > 45
     - Distribution of split:
         - Training set: 70% of the genes from each category
         - Test set: remaining 30% of the genes from each category
     - Concatenate the gene_id samples of all 3 categories into 2 lists respectively: *train_genes* and *test_genes*
 
 - **Step 3: Feature extraction and data transformations**
-    - Split the Sequence column into 3 columns: first_base, last_base and middle_sequence. For the columns first_base and last_base, we converted the alphabetical letters into numeric numbers with a mapping dictionary.
+    - Split the `Sequence` column into 3 columns: `first_base`, `last_base` and `middle_sequence`. For the columns `first_base` and `last_base`, we converted the alphabetical letters into numeric numbers with a mapping dictionary.
         ```python
         ATGC_mapping = {'A': 0, 'T': 1, 'G': 2, 'C': 3}
         ```
@@ -104,7 +104,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
 
 We recommend an EBS Volume Size of **1500GB** and an Instance Type of **4xlarge** for faster results. This size is also able to handle the workload of predicting the possibilites of m6A modification of the short reads in the [SG-NEx Samples](https://sg-nex-data.s3.amazonaws.com/index.html#data/processed_data/m6Anet/) in reasonable time.
 
-- Your IP address of your instance can be found by following the steps in the screenshot below:
+- The IP address of your instance can be found by following the steps in the screenshot below:
 
     ![image](https://user-images.githubusercontent.com/92244042/199281130-d52a2884-1a52-48a2-9c9a-d6cf9a0ae18f.png)
 
