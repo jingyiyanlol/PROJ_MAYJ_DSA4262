@@ -167,7 +167,7 @@ git clone --depth 1 https://github.com/jingyiyanlol/PROJ_MAYJ_DSA4262.git
    git config --global core.compression 0
    ```
 
-- If the above methods still do not work, you can click [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to learn how to create your GitHub personal access token and try the next method. If you are unable to clone this repository still, you can contact any of us on GitHub!
+- If the above methods still do not work, you can click [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to learn how to create your GitHub personal access token and try the next method. If you are unable to clone this repository still, feel free to raise an issue in this repository!
 
     - Insert your GitHub personal access token in `<tokenhere>` in the command below. 
         ```bash
