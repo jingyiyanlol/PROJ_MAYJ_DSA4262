@@ -80,7 +80,7 @@ Image source: [Spandidos Publicatios](https://www.spandidos-publications.com/10.
     
     - With the gene_id lists from *step 2*, we split the dataframe into training set and test set.
     - For the training set dataframe, we resampled the rows with label of the minority class to deal with the imbalanced dataset (m6A modified transcripts are much less than the unmodified transcripts).
-    - After resampling, we dropped indentity columns which are namely `gene_id` and `transcript_id`. The `Read_Counts` column was also dropped as it is not logical to use it as a feature to predict m6A modification. 
+    - After resampling, we dropped identity columns which are namely `gene_id` and `transcript_id`. The `Read_Counts` column was also dropped as it is not logical to use it as a feature to predict m6A modification. 
     - For the column `middle_sequence`, we converted the categorical variable using the `OneHotEncoder` function in the `sklearn` package before fitting the model as XGBoost **cannot** be fitted with values of character type.
     
 
