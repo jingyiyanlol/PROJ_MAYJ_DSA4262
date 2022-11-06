@@ -202,14 +202,19 @@ make install_all
 ```
 - If you are prompted with the message `Do you want to continue? [Y/n]`, type `Y` and press `Enter`.
 
-- If you would like to install our dependencies in a *python virtual environment*, run the commands below instead:
+- If you would like to install our dependencies in a *python virtual environment*, run the sequence of commands below instead:
     ```bash
     make install
     ```
-    ```bash
-    python3 -m venv ~/.venv
-    source ~/.venv/bin/activate
-    ```
+    - Make sure that the Python version installed in your machine is 3.8.10 by typing the command:
+        ```bash
+        python3 --version
+        ```
+    - Create and activate the virtual environment `venv` by running the commands below:
+        ```bash
+        python3 -m venv ~/.venv
+        source ~/.venv/bin/activate
+        ```
     ```bash
     make install_python_dependencies
     ```
